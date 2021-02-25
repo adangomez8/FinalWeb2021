@@ -1,0 +1,40 @@
+3-a
+Primero me aseguro de que el usuarion esté loggeado como usuario común (que no sea administrador). A partir de ahí
+crearía un formulario para que complete los datos de cada pasaje con un select con la lista de todos 
+los viajes que haya disponibles y que se muestren si tienen disponibilidad de pasajes. 
+Por otro lado agregaria agregaría la columna id_usuario: int; en la tabla pasajes), luego crearía un link que redirija 
+a todos los viajes que tenga reservado dicho usuario a traves del id de dicho usuario y al lado de cada
+uno de estos viajes que cada uno tenga la opción de cancelarlo, lo que estaría haciendo el usuario 
+sería borrar de la base de datos de la tabla pasajes los datos que el había cargado a traves del id del pasaje que 
+sacó anteriormente.
+Para que pueda generar calificaciones y poder comentar un viaje determinado lo que haría seria primero crear una 
+tabla en la base de datos: comentarios(id, texto, puntuacion, id_usuario); luego que haya un formulario en 
+cada uno de los vuelos que permita hacer esas dos cosas. Esto lo haría con un formulario como el que use para 
+reservar pasajes que contenga un select con todos los viajes que este usuario haya hecho (agregaría la columna
+ya_viajo: bool en la tabla pasajes) y que ahí pueda comentar y puntuar del 1 al 10 (con un select) dicho viaje;
+
+//FALTA TABLA DE WORD
+
+3-b
+Para consultar las calificaciones de un viaje:
+'Viaje/:ID/comentario', 'GET', 'PublicApiController', 'getAllComment'
+Para eliminar las calificaciones de un viaje:
+'Viaje/:ID/comentario', 'DELETE', 'PublicApiController', 'deleteComment'
+Para agregar una calificación a un viaje:
+'Viaje/:ID/comentario', 'POST', 'PublicApiController', 'addComment'
+
+3-c
+Otro tipo de servicio podría ser poder ofrecer vuelos de aviones de alguna aerolinea, sería util por si algun 
+usuario desea sacar un vuelo cuando llega de su viaje en omnibus a la terminal o al reves, utilizando como 
+parámetro la fecha y la hora de los viajes de los omnibus.
+Para esto crearía una tabla vuelos(id, fecha, hora_salida, hora_llegada, dni_usuario) y modificaría la tabla 
+viaje de modo que quede ViajeOmnibus(id, nro_viaje, día, hora_salida, hora_llegada, empresa, id_ciudad_origen, 
+id_ciudad_destino) para que no se permita sacar un pasaje de omnibus cuando la persona está volando o 
+lo mismo al reves.
+
+Otro servicio podría ser tener viajes exclusivos para personas de riesgo de COVID, ya que va a haber micros exclusivos 
+para estas personas.
+Aca lo que haría seía modificar la tabla viaje de modo que quede Viaje(id, nro_viaje, día, hora_salida, 
+hora_llegada, empresa, id_ciudad_origen, id_ciudad_destino, personaDeRiesgo: boolean) y crearía 
+la tabla pasajesRiesgo(id, dni, cantidad, cancelado: boolean, id_viaje)y en el caso de que sea
+perona de riesgo se le asignará uno de los pasajes de la tabla pasajesRiesgo.
